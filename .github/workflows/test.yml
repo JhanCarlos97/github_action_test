@@ -24,7 +24,8 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
           
             #Now we have got the access of EC2 and we will start the deploy .
-            cd home/${USER_NAME} &&
+            mkdir -p home/${USER_NAME}/cube-quext-dev &&
+            cd home/${USER_NAME}/cube-quext-dev &&
             git sparse-checkout set CubeJS/schema &&
             #Please validate all the git commands to only copy the content inside the CubeJS/schema folder
             git checkout master &&
