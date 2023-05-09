@@ -20,16 +20,16 @@ jobs:
             USER_NAME : ${{ secrets.USER_NAME  }}
             
         run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+          ssh-keyscan $HOSTNAME >> ~/.ssh/known_hosts
           
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key.pem
+          rsync -avz --delete ./CubeJS/schema ${{ secrets.USER_NAME }}@${{ secrets.HOSTNAME }}:/home/${{ secrets.USER_NAME }}/cube-dev-quext 
+          ssh -i private_key.pem ${{ secrets.USER_NAME }}@${{ secrets.HOSTNAME }}
+          '
+          cd /home/${{ secrets.USER_NAME }}/cube-dev-quext
             #Now we have got the access of EC2 and we will start the deploy .
-            sudo mkdir -p /CubeJS/schema &&
-            cd /CubeJS/schema &&
-            #Please validate all the git commands to only copy the content inside the CubeJS/schema folder
-            git checkout master &&
-            git fetch --all &&
-            git reset --hard origin/master &&
-            git pull origin master
+            sudo mkdir -p /home/${{ secrets.USER_NAME }}/cube-dev-quext/CubeJS/schema &&
+            cd /home/${{ secrets.USER_NAME }}/cube-dev-quext/CubeJS/schema
             #Docker commands to run everytime is a new thing added
+            #docker-compose up && docker-compose down -d
           '
