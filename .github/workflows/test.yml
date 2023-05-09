@@ -29,6 +29,6 @@ jobs:
             git checkout master &&
             git fetch --all &&
             git reset --hard origin/master &&
-            git pull origin master &&
+            git pull origin master
             #Docker commands to run everytime is a new thing added
           '
