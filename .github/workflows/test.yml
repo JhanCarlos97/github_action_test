@@ -24,7 +24,7 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
           
             #Now we have got the access of EC2 and we will start the deploy .
-            mkdir -p /CubeJS/schema &&
+            sudo mkdir -p /CubeJS/schema &&
             cd /CubeJS/schema &&
             #Please validate all the git commands to only copy the content inside the CubeJS/schema folder
             git checkout master &&
