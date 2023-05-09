@@ -4,13 +4,13 @@ on:
   push:
     branches: [ master ]
     paths: ['CubeJS/schema/**'] #validate this
-    
+
 
 jobs:
 
   Deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v2 
       - name: Deploy in EC2
@@ -18,16 +18,20 @@ jobs:
             PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
             HOSTNAME : ${{ secrets.HOSTNAME  }}
             USER_NAME : ${{ secrets.USER_NAME  }}
-            
+
         run: |
-          echo "$PRIVATE_KEY" > private_key.pem && chmod 600 private_key.pem
-          rsync -avz --delete ./CubeJS/schema ${{ secrets.USER_NAME }}@${{ secrets.HOSTNAME }}:/home/${{ secrets.USER_NAME }}/cube-dev-quext 
-          ssh -i private_key.pem ${{ secrets.USER_NAME }}@${{ secrets.HOSTNAME }}
-          '
-          cd /home/${{ secrets.USER_NAME }}/cube-dev-quext
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+          
             #Now we have got the access of EC2 and we will start the deploy .
-            sudo mkdir -p /home/${{ secrets.USER_NAME }}/cube-dev-quext/CubeJS/schema &&
-            cd /home/${{ secrets.USER_NAME }}/cube-dev-quext/CubeJS/schema
+            
+            git clone --depth 1 --b master --no-checkout https://github.com/JhanCarlos97/github_action_test.git home/${USER_NAME}/cube-quext-dev
+            cd home/${USER_NAME}/cube-quext-dev &&
+            git sparse-checkout set CubeJS &&
+            #Please validate all the git commands to only copy the content inside the CubeJS/schema folder
+            git checkout master #&&
+            #git fetch --all &&
+            #git reset --hard origin/master &&
+            #git pull origin master &&
             #Docker commands to run everytime is a new thing added
-            #docker-compose up && docker-compose down -d
           '
