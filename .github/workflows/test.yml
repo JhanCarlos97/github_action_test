@@ -1,0 +1,34 @@
+name: CI/CD Cube JS EC2
+
+on:
+  push:
+    branches: [ master ]
+    paths: ['CubeJS/schema/**'] #validate this
+    
+
+jobs:
+
+  Deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2 
+      - name: Deploy in EC2
+        env:
+            PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
+            HOSTNAME : ${{ secrets.HOSTNAME  }}
+            USER_NAME : ${{ secrets.USER_NAME  }}
+            
+        run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+          
+            #Now we have got the access of EC2 and we will start the deploy .
+            cd /CubeJS/schema &&
+            #Please validate all the git commands to only copy the content inside the CubeJS/schema folder
+            git checkout master &&
+            git fetch --all &&
+            git reset --hard origin/master &&
+            git pull origin master &&
+            #Docker commands to run everytime is a new thing added
+          '
