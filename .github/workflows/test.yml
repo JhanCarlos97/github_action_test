@@ -25,7 +25,7 @@ jobs:
           
             #Now we have got the access of EC2 and we will start the deploy .
             
-            git clone --depth 1 --b master --no-checkout https://github.com/JhanCarlos97/github_action_test.git home/${USER_NAME}/cube-quext-dev
+            git clone --depth 1 --branch master --no-checkout https://github.com/JhanCarlos97/github_action_test.git home/${USER_NAME}/cube-quext-dev
             cd home/${USER_NAME}/cube-quext-dev &&
             git sparse-checkout set CubeJS &&
             #Please validate all the git commands to only copy the content inside the CubeJS/schema folder
