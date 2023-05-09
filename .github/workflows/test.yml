@@ -27,10 +27,10 @@ jobs:
             cd home/${USER_NAME}/cube-quext-dev &&
             git sparse-checkout set CubeJS &&
             #Please validate all the git commands to only copy the content inside the CubeJS/schema folder
-            git pull origin master
-            #git checkout master #&&
-            #git fetch --all &&
-            #git reset --hard origin/master &&
-            #git pull origin master &&
+            #git pull origin master
+            git checkout master &&
+            git fetch --all &&
+            git reset --hard origin/master &&
+            git pull origin master #&&
             #Docker commands to run everytime is a new thing added
           '
