@@ -3,7 +3,7 @@ name: CI/CD Cube JS EC2
 on:
   push:
     branches: [ master ]
-    paths: ['CubeJS/schema/**', 'CubeJS/schema/cube.js']
+    paths: ['CubeJS/schema/**', 'CubeJS/cube.js']
     
 
 jobs:
@@ -27,7 +27,7 @@ jobs:
       - name: Copy files to S3
         run: |
           aws s3 cp --recursive ./CubeJS/schema s3://${{env.S3_BUCKET}}/schema/
-          aws s3 cp ./CubeJS/schema/cube.js s3://${{env.S3_BUCKET}}/cube.js
+          aws s3 cp ./CubeJS/cube.js s3://${{env.S3_BUCKET}}/cube.js
 
   sync-S3-to-EC2:
     runs-on: ubuntu-latest
