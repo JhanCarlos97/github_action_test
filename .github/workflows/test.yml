@@ -63,8 +63,8 @@ jobs:
             export AWS_ACCESS_KEY_ID=${{env.AWS_ACCESS_KEY_ID}}
             export AWS_SECRET_ACCESS_KEY=${{env.AWS_SECRET_ACCESS_KEY}}
             mkdir -p ./cube-dev-quext/schema
-            aws s3 sync s3://${{env.S3_BUCKET}}/schema ./cube-dev-quext/schema
-            aws s3 sync s3://${{env.S3_BUCKET}}/cube.js ./cube-dev-quext/cube.js
+            aws s3 sync s3://${{env.S3_BUCKET}}/schema ./cube-dev-quext/schema --delete
+            aws s3 cp s3://${{env.S3_BUCKET}}/cube.js ./cube-dev-quext/cube.js
 
             #Docker commands to run everytime is a new thing added
             #docker-compose down && docker-compose up -d
