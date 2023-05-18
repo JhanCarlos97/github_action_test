@@ -60,6 +60,8 @@ jobs:
             #Now we have got the access of EC2 and we will start the deploy .
             #Please validate all the aws commands to sync the content inside the CubeJS/schema folder
             echo "Connected to EC2 instance"
+            export AWS_ACCESS_KEY_ID=${{env.AWS_ACCESS_KEY_ID}}
+            export AWS_SECRET_ACCESS_KEY=${{env.AWS_SECRET_ACCESS_KEY}}
             mkdir -p ./cube-dev-quext/schema
             aws s3 sync s3://${{env.S3_BUCKET}}/schema ./cube-dev-quext/schema
             aws s3 sync s3://${{env.S3_BUCKET}}/cube.js ./cube-dev-quext/cube.js
