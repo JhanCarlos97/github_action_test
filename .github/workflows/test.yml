@@ -26,7 +26,7 @@ jobs:
       - uses: actions/checkout@v2 
       - name: Copy files to S3
         run: |
-          aws s3 sync ./CubeJS/schema s3://${{env.S3_BUCKET}}/schema/
+          aws s3 sync ./CubeJS/schema s3://${{env.S3_BUCKET}}/schema/ --delete
           echo "Schema sync done!"
           aws s3 cp ./CubeJS/cube.js s3://${{env.S3_BUCKET}}/cube.js
           echo "cube.js file copied!"
