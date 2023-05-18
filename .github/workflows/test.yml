@@ -26,10 +26,10 @@ jobs:
       - uses: actions/checkout@v2 
       - name: Copy files to S3
         run: |
-          aws s3 rm s3://${{env.S3_BUCKET}}/ --recursive
-          aws s3 cp --recursive ./CubeJS/schema s3://${{env.S3_BUCKET}}/schema/
+          aws s3 sync ./CubeJS/schema s3://${{env.S3_BUCKET}}/schema/
+          echo "Schema sync done!"
           aws s3 cp ./CubeJS/cube.js s3://${{env.S3_BUCKET}}/cube.js
-          echo "Files copied into S3 bucket"
+          echo "cube.js file copied!"
 
   sync-S3-to-EC2:
     runs-on: ubuntu-latest
