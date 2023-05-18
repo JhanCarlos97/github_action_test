@@ -1,1 +1,2 @@
 add with sync
+checking delete also
